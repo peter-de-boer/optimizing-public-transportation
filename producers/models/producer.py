@@ -33,33 +33,37 @@ class Producer:
 
         #
         #
-        # TODO: Configure the broker properties below. Make sure to reference the project README
+        # DONE: Configure the broker properties below. Make sure to reference the project README
         # and use the Host URL for Kafka and Schema Registry!
         #
         #
         self.broker_properties = {
-            # TODO
-            # TODO
-            # TODO
-        }
+            "schema.registry.url": "http://localhost:8081" 
+            "bootstrap.servers":   "PLAINTEXT://localhost:9092"
+           
+
 
         # If the topic does not already exist, try to create it
         if self.topic_name not in Producer.existing_topics:
             self.create_topic()
             Producer.existing_topics.add(self.topic_name)
 
-        # TODO: Configure the AvroProducer
-        # self.producer = AvroProducer(
-        # )
+        # DONE: Configure the AvroProducer
+        self.producer = AvroProducer(
+            self.broker_properties
+        )
 
+
+                                        
     def create_topic(self):
         """Creates the producer topic if it does not already exist"""
         #
         #
-        # TODO: Write code that creates the topic for this producer if it does not already exist on
+        # DONE: Write code that creates the topic for this producer if it does not already exist on
         # the Kafka Broker.
         #
         #
+        self.producer.produce(topic=self.topic_name)
         logger.info("topic creation kafka integration incomplete - skipping")
 
     def time_millis(self):
@@ -69,9 +73,12 @@ class Producer:
         """Prepares the producer for exit by cleaning up the producer"""
         #
         #
-        # TODO: Write cleanup code for the Producer here
+        # DONE Write cleanup code for the Producer here
         #
         #
+        # 
+        self.producer.flush() # wait till all messages are delivered
+        self.producer.close()
         logger.info("producer close incomplete - skipping")
 
     def time_millis(self):
