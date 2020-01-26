@@ -37,7 +37,7 @@ class Station(Producer):
         # replicas
         #
         #
-        topic_name = f"com.udacity.arrival.{station_name}" # DONE: Come up with a better topic name
+        topic_name = f"nd.project.opt.arrival.{station_name}" # DONE: Come up with a better topic name
         super().__init__(
             topic_name,
             key_schema=Station.key_schema,
@@ -59,7 +59,7 @@ class Station(Producer):
         """Simulates train arrivals at this station"""
         #
         #
-        # TODO: Complete this function by producing an arrival message to Kafka
+        # DONE: Complete this function by producing an arrival message to Kafka
         #
         #
         logger.info("arrival kafka integration incomplete - skipping")
@@ -69,7 +69,7 @@ class Station(Producer):
             value={
                 #
                 #
-                # TODO: Configure this
+                # DONE: Configure this
                 #
                 #
                 "station_id": self.station_id,

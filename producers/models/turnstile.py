@@ -38,7 +38,7 @@ class Turnstile(Producer):
         #
         #
         super().__init__(
-            f"com.udacity.turnstile.{station_name}", # DONE: Come up with a better topic name
+            f"nd.project.opt.turnstile.{station_name}", # DONE: Come up with a better topic name
             key_schema=Turnstile.key_schema,
             value_schema=Turnstile.value_schema, # DONE: Uncomment once schema is defined
             num_partitions=10, # DONE
