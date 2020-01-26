@@ -48,7 +48,7 @@ class Producer:
             self.create_topic()
             Producer.existing_topics.add(self.topic_name)
 
-        # DONE: Configure the AvroProducer
+        # TODO: Configure the AvroProducer 
         self.producer = AvroProducer(
             self.broker_properties
         )
