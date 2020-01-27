@@ -62,20 +62,21 @@ def run_server():
     application.listen(WEB_SERVER_PORT)
 
     # Build kafka consumers
+    # TODO check if ^ prefix is ok
     consumers = [
         KafkaConsumer(
-            "(\w*|\.)*weather(.(\w*|\.))*",
+            "^(\w*|\.)*weather(.(\w*|\.))*",
             weather_model.process_message,
             offset_earliest=True,
         ),
         KafkaConsumer(
-            "(\w*|\.)*stations.table(.(\w*|\.))",
+            "^(\w*|\.)*stations.table(.(\w*|\.))",
             lines.process_message,
             offset_earliest=True,
             is_avro=False,
         ),
         KafkaConsumer(
-            "(\w*|\.)*station.arrivals.(.(\w*|\.))*",
+            "^(\w*|\.)*station.arrivals.(.(\w*|\.))*",
             lines.process_message,
             offset_earliest=True,
         ),
