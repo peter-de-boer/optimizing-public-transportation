@@ -40,7 +40,7 @@ class Producer:
         self.broker_properties = {
             "schema.registry.url": "http://localhost:8081" 
             "bootstrap.servers":   "PLAINTEXT://localhost:9092"
-           
+        }   
 
 
         # If the topic does not already exist, try to create it
