@@ -62,11 +62,12 @@ class Station(Producer):
         # DONE: Complete this function by producing an arrival message to Kafka
         #
         #
-        logger.info("arrival kafka integration incomplete - skipping")
-        self.producer.produce(
-            topic=self.topic_name,
-            key={"timestamp": self.time_millis()},
-            value={
+        
+        if prev_station_id is None:
+            prev_station_id = -1
+        if prev_direction is None:
+            prev_direction = "none"
+        value={
                 #
                 #
                 # DONE: Configure this
@@ -76,10 +77,17 @@ class Station(Producer):
                 "train_id": train.train_id,
                 "direction": direction,
                 "line": self.color.name,      
-                "train_status": train.status,  # TODO
+                "train_status": train.status.name,  # DONE
                 "prev_station_id": prev_station_id,
                 "prev_direction": prev_direction
-           },
+        }
+        logger.info(f"arrivel event: {value}")
+        self.producer.produce(
+            topic=self.topic_name,
+            key={"timestamp": self.time_millis()},
+            value=value,
+           value_schema=self.value_schema,
+           key_schema=self.key_schema
            
         )
 
