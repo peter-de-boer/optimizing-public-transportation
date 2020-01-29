@@ -36,14 +36,16 @@ class Weather(Producer):
         # replicas
         #
         #
+        # TODO: check this, it seems the parent Producer, avroProducer, etc. does not really affect the rest proxy
         super().__init__(
-            "nd.project.opt.weather", # DONE: Come up with a better topic name
+            "nd-project-opt-weather", # DONE: Come up with a better topic name
             key_schema=Weather.key_schema,
             value_schema=Weather.value_schema,
-            num_partitions=10, # DONE
+        #   num_partitions=10, # DONE
             num_replicas=3,    # DONE
         )
 
+        self.topic_name = "nd.project.opt.weather"
         self.status = Weather.status.sunny
         self.temp = 70.0
         if month in Weather.winter_months:
@@ -81,14 +83,16 @@ class Weather(Producer):
         # specify the Avro schemas and verify that you are using the correct Content-Type header.
         #
         #
-        logger.info("weather kafka proxy integration incomplete - skipping")
+        logger.info(f"posting weather event, temp: {self.temp:.2f}; status {self.status.name}")
+        logger.debug(f"value_schema: {Weather.value_schema}")
+        logger.debug(f"key_schema: {Weather.key_schema}")
         resp = requests.post(
             #
             #
             # DONE: What URL should be POSTed to?
             #
             #
-            f"{Weather.rest_proxy_url}/topics/nd.project.opt.weather",
+            f"{Weather.rest_proxy_url}/topics/{self.topic_name}",
             #
             #
             # DONE: What Headers need to bet set?
@@ -102,20 +106,28 @@ class Weather(Producer):
                     # DONE: Provide key schema, value schema, and records
                     #
                     #
-                    "key_schema": Weather.key_schema,
-                    "value_schema": Weather.value_schema,
+                    "key_schema":   json.dumps(Weather.key_schema),
+                    "value_schema": json.dumps(Weather.value_schema),
                     "records": [
                         {
+                            "key":  {
+                                "timestamp": self.time_millis()
+                            },
                             "value": {
                                 "temperature": self.temp,
-                                "status": self.status
+                                "status": self.status.name
                             }
                         }
                     ]
                 }
             ),
         )
-        resp.raise_for_status()
+
+        try:
+            resp.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            print(f"failed creating weather event: {json.dumps(resp.json(), indent=2)}")
+            print(e)
 
         logger.debug(
             "sent weather data to kafka, temp: %s, status: %s",

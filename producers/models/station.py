@@ -81,7 +81,7 @@ class Station(Producer):
                 "prev_station_id": prev_station_id,
                 "prev_direction": prev_direction
         }
-        logger.info(f"arrivel event: {value}")
+        logger.info(f"arrival event: {value}")
         self.producer.produce(
             topic=self.topic_name,
             key={"timestamp": self.time_millis()},
