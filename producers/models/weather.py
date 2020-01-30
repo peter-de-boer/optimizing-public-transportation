@@ -38,7 +38,7 @@ class Weather(Producer):
         #
         # TODO: check this, it seems the parent Producer, avroProducer, etc. does not really affect the rest proxy
         super().__init__(
-            "nd-project-opt-weather", # DONE: Come up with a better topic name
+            "nd.project.opt.weather", # DONE: Come up with a better topic name
             key_schema=Weather.key_schema,
             value_schema=Weather.value_schema,
         #   num_partitions=10, # DONE
