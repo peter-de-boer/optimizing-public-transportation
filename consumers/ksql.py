@@ -61,7 +61,7 @@ def execute_statement():
     logging.debug("executing ksql statement...")
 
     resp = requests.post(
-        f"{KSQL_URL}/topics/ksql",
+        f"{KSQL_URL}/ksql",
         headers={"Content-Type": "application/vnd.ksql.v1+json"},
         data=json.dumps(
             {
