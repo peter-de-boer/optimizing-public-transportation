@@ -32,12 +32,14 @@ KSQL_URL = "http://localhost:8088"
 
 KSQL_STATEMENT = """
 CREATE TABLE turnstile (
-    station_name INTEGER,
-    station_id VARCHAR,
+    timestamp INTEGER
+    station_name VARCHAR,
+    station_id INTEGER,
     line VARCHAR
 ) WITH (
     KAFKA_TOPIC='nd.project.opt.turnstile',
-    VALUE_FORMAT='Avro'
+    VALUE_FORMAT='Avro',
+    KEY='timestamp'
 );
 
 
@@ -45,9 +47,9 @@ CREATE TABLE turnstile_summary
 WITH (
     VALUE_FORMAT='JSON'
 ) AS
-  SELECT *, COUNT(station_id) AS count
+  SELECT station_id, COUNT(station_id) AS count
   FROM turnstile
-  GROUP BY station_id
+  GROUP BY station_id;
 
 """
 
@@ -60,7 +62,7 @@ def execute_statement():
     logging.debug("executing ksql statement...")
 
     resp = requests.post(
-        f"{KSQL_URL}/ksql",
+        f"{KSQL_URL}/topics/ksql",
         headers={"Content-Type": "application/vnd.ksql.v1+json"},
         data=json.dumps(
             {
