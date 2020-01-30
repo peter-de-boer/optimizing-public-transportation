@@ -32,14 +32,13 @@ KSQL_URL = "http://localhost:8088"
 
 KSQL_STATEMENT = """
 CREATE TABLE turnstile (
-    timestamp INTEGER
     station_name VARCHAR,
     station_id INTEGER,
     line VARCHAR
 ) WITH (
     KAFKA_TOPIC='nd.project.opt.turnstile',
     VALUE_FORMAT='Avro',
-    KEY='timestamp'
+    KEY='station_id'
 );
 
 
