@@ -52,7 +52,7 @@ def configure_connector():
                 # DONE
                 "incrementing.column.name": "stop_id",
                 # DONE
-                "topic.prefix": "nd.project.opt.raw",
+                "topic.prefix": "nd.project.opt.raw.",
                 # DONE
                 "poll.interval.ms": "10000",
                 

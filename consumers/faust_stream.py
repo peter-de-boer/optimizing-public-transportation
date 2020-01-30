@@ -3,6 +3,8 @@ import logging
 
 import faust
 
+from dataclasses import asdict, dataclass
+
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +24,7 @@ class Station(faust.Record):
 
 
 # Faust will produce records to Kafka in this format
+@dataclass
 class TransformedStation(faust.Record):
     station_id: int
     station_name: str
@@ -72,7 +75,8 @@ async def station_event(stations):
             order = station.order,
             line = getLine(station.red, station.blue, station.green)
         )
-        table.update(asdict(transformed_station)) 
+        table.update(asdict(transformed_station))
+
 
 
 if __name__ == "__main__":
