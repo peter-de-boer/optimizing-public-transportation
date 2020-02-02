@@ -66,8 +66,11 @@ class KafkaConsumer:
         # the beginning or earliest
         logger.info("on_assign...")
         for partition in partitions:
-            if self.offset_earliest:
-                partition.offset = OFFSET_BEGINNING
+            try:
+                if self.offset_earliest:
+                    partition.offset = confluent_kafka.OFFSET_BEGINNING
+            except:
+                logger.info("something wrong with OFFSET_BEGINNING...")
             #
             #
             # DONE
@@ -97,6 +100,7 @@ class KafkaConsumer:
         logger.info("consume message...")
         message = self.consumer.poll(1.0)
         if message is None:
+            logger.info("no message")
             return 0
         elif message.error() is not None:
             logger.info(f"error from consumer {message.error()}")
