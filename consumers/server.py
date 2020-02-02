@@ -65,18 +65,18 @@ def run_server():
     # TODO check if ^ prefix is ok
     consumers = [
         KafkaConsumer(
-            "^(\w*|\.)*weather(.(\w*|\.))*",
+            "nd.project.opt.weather",
             weather_model.process_message,
             offset_earliest=True,
         ),
         KafkaConsumer(
-            "^(\w*|\.)*stations(\w*|\.))",
+            "nd.project.opt.stations",
             lines.process_message,
             offset_earliest=True,
             is_avro=False,
         ),
         KafkaConsumer(
-            "^(\w*|\.)*station.arrivals.(.(\w*|\.))*",
+            "^nd.project.opt.arrivals.(.(\w*|\.))*",
             lines.process_message,
             offset_earliest=True,
         ),
