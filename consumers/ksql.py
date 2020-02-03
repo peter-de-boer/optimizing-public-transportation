@@ -72,8 +72,12 @@ def execute_statement():
     )
 
     # Ensure that a 2XX status code was returned
-    resp.raise_for_status()
-
+    
+    try:
+        resp.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        print(f"failed creating turnstile_summary event: {json.dumps(resp.json(), indent=2)}")
+        print(e)
 
 if __name__ == "__main__":
     execute_statement()
