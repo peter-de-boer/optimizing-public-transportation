@@ -75,7 +75,8 @@ async def station_event(stations):
             order = station.order,
             line = getLine(station.red, station.blue, station.green)
         )
-        table.update(asdict(transformed_station))
+        table[station.stop_id]= asdict(transformed_station)
+
 
 
 
