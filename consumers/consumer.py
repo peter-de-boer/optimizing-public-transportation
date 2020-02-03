@@ -107,6 +107,7 @@ class KafkaConsumer:
             return 0
         else:
             logger.info(f"consumed message {message.key()}: {message.value()}")
+            self.message_handler(message)
             return 1
 
 
