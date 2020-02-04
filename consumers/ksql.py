@@ -13,22 +13,16 @@ logger = logging.getLogger(__name__)
 KSQL_URL = "http://localhost:8088"
 
 #
-# TODO: Complete the following KSQL statements.
-# TODO: For the first statement, create a `turnstile` table from your turnstile topic.
+# DONE: Complete the following KSQL statements.
+# DONE: For the first statement, create a `turnstile` table from your turnstile topic.
 #       Make sure to use 'avro' datatype!
-# TODO: For the second statment, create a `turnstile_summary` table by selecting from the
+# DONE: For the second statment, create a `turnstile_summary` table by selecting from the
 #       `turnstile` table and grouping on station_id.
 #       Make sure to cast the COUNT of station id to `count`
 #       Make sure to set the value format to JSON
 
-# TODO: producer: one topic for each station
-#       consumer: one turnstile table, can consume only one topic
-# either 1) produce only one topic
-# or     2) multiple table and combine them
-#
-# 2): UNION?
-# 1): probably better: turnstile events should write into same topic
-# assume 1) 
+
+
 
 KSQL_STATEMENT = """
 CREATE TABLE turnstile (

@@ -43,7 +43,7 @@ class Producer:
         }   
 
 
-        # TODO: Configure the AvroProducer 
+        # DONE: Configure the AvroProducer 
         self.producer = AvroProducer(
             self.broker_properties
         )

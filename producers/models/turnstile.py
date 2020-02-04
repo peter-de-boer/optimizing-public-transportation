@@ -33,7 +33,7 @@ class Turnstile(Producer):
 
         #
         #
-        # TODO: Complete the below by deciding on a topic name, number of partitions, and number of
+        # DONE: Complete the below by deciding on a topic name, number of partitions, and number of
         # replicas
         #
         #
@@ -53,7 +53,7 @@ class Turnstile(Producer):
         logger.info(f"turnstile event: num_entries: {num_entries}; station_id: {self.station.station_id}; station_name: {self.station.name}")
         #
         #
-        # TODO: Complete this function by emitting a message to the turnstile topic for the number
+        # DONE: Complete this function by emitting a message to the turnstile topic for the number
         # of entries that were calculated
         #
         for entry in range(num_entries):
@@ -63,7 +63,7 @@ class Turnstile(Producer):
                  value={
                     "station_id": self.station.station_id,
                     "station_name": self.station.name,
-                    "line": self.station.color.name,          # TODO: where to get line info?
+                    "line": self.station.color.name,          
                 },
                 key_schema = self.key_schema,
                 value_schema = self.value_schema
