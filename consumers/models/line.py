@@ -27,6 +27,7 @@ class Line:
         """Adds the station to this Line's data model"""
         if value["line"] != self.color:
             return
+        logger.debug(f"***_handle_station *** station_id: {value['station_id']}, station: {Station.from_message(value)}")
         self.stations[value["station_id"]] = Station.from_message(value)
 
     def _handle_arrival(self, message):
@@ -72,7 +73,9 @@ class Line:
             json_data = json.loads(message.value())
             station_id = json_data.get("STATION_ID")
             station = self.stations.get(station_id)
+            #logger.debug(f"all stations: {self.stations}")
             if station is None:
+                logger.debug(f"json_data: {json_data}, station_id: {station_id}")
                 logger.debug("unable to handle message due to missing station")
                 return
             station.process_message(json_data)

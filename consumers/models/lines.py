@@ -22,6 +22,7 @@ class Lines:
         logger.info(f"process message: {message.topic()}")
         if "nd.project.opt." in message.topic():
             value = message.value()
+            logger.debug(f"****** message: {message.value()}")
             if message.topic() == "nd.project.opt.stations":
                 value = json.loads(value)
             if value["line"] == "green":
