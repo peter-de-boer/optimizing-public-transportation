@@ -105,6 +105,9 @@ class KafkaConsumer:
         elif message.error() is not None:
             logger.info(f"error from consumer {message.error()}")
             return 0
+        elif message.value() is None:
+            logger.info("empty message")
+            return 0
         else:
             logger.info(f"consumed message {message.key()}: {message.value()}")
             self.message_handler(message)
